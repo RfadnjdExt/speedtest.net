@@ -16,7 +16,8 @@
     "license": "MIT",
     "files": [
         "bin/index.js",
-        "index.js"
+        "index.js",
+        "download.js"
     ],
     "prettier": {
         "tabWidth": 4
