@@ -7,10 +7,8 @@ const archiveType = require("archive-type");
 const decompress = require("decompress");
 const filenamify = import("filenamify");
 const getStream = require("get-stream");
-const got = import("got");
 const makeDir = require("make-dir");
 const pify = require("pify");
-const pEvent = import("p-event");
 const fileType = require("file-type");
 const extName = require("ext-name");
 
@@ -58,7 +56,7 @@ const getFilename = (res, data) => {
     return filename;
 };
 
-module.exports = (uri, output, opts) => {
+module.exports = async (uri, output, opts) => {
     if (typeof output === "object") {
         opts = output;
         output = null;
@@ -71,9 +69,10 @@ module.exports = (uri, output, opts) => {
         },
         opts,
     );
-
-    const stream = got.stream(uri, opts);
-
+    const {default:got} = await import("got");
+    const stream = got.stream(uri);
+    
+    const {pEvent} = await import("p-event");
     const promise = pEvent(stream, "response")
         .then((res) => {
             const encoding = opts.encoding === null ? "buffer" : opts.encoding;
