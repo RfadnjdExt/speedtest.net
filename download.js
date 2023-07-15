@@ -9,7 +9,6 @@ const filenamify = import("filenamify");
 const getStream = require("get-stream");
 const makeDir = require("make-dir");
 const pify = require("pify");
-const fileType = require("file-type");
 const extName = require("ext-name");
 
 const fsP = pify(fs);
@@ -32,7 +31,7 @@ const getExtFromMime = (res) => {
     return exts[0].ext;
 };
 
-const getFilename = (res, data) => {
+const getFilename = async (res, data) => {
     const header = res.headers["content-disposition"];
 
     if (header) {
@@ -46,6 +45,7 @@ const getFilename = (res, data) => {
     let filename = filenameFromPath(res);
 
     if (!path.extname(filename)) {
+        const fileType = await import("file-type");
         const ext = (fileType(data) || {}).ext || getExtFromMime(res);
 
         if (ext) {
