@@ -69,10 +69,10 @@ module.exports = async (uri, output, opts) => {
         },
         opts,
     );
-    const {default:got} = await import("got");
+    const { default: got } = await import("got");
     const stream = got.stream(uri);
-    
-    const {pEvent} = await import("p-event");
+
+    const { pEvent } = await import("p-event");
     const promise = pEvent(stream, "response")
         .then((res) => {
             const encoding = opts.encoding === null ? "buffer" : opts.encoding;
