@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "prettier": "^3.0.0",
-        "web-opencommit": "github:RfadnjdExt/web-opencommit"
+        "web-opencommit": "github:XCR90/web-opencommit"
     },
     "license": "MIT",
     "files": [
