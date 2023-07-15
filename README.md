@@ -9,10 +9,12 @@ npm install --save speedtest-net
 ```
 
 ## Command-Line Tool
+
 ```bash
 $ npm install --global speedtest-net
 $ speedtest-net
 ```
+
 ## Usage
 
 The whole speed test runs automatically, but a lot of events are available
@@ -21,31 +23,31 @@ to get more info than you need.
 The test comes in two versions. The main one is for use by code, and then
 there's a command line utility.
 
-
 Code use example:
+
 ```js
-const speedTest = require('speedtest-net');
+const speedTest = require("speedtest-net");
 
 (async () => {
-  try {
-    console.log(await speedTest());
-  } catch (err) {
-    console.log(err.message);
-  } finally {
-    process.exit(0);
-  }
+    try {
+        console.log(await speedTest());
+    } catch (err) {
+        console.log(err.message);
+    } finally {
+        process.exit(0);
+    }
 })();
-
 ```
 
 ## CLI options
+
 Usage: `speedtest-net [-h|--help] [--accept-license] [--server-id <id>] [--source-ip <ip>]`
 
-- **`-h`**, **`--help`**: Help
-- **`--accept-license`**: Accept the Ookla EULA, TOS and Privacy policy. The terms only need to be accepted once.
-- **`--accept-gdpr`**: Accept the Ookla GDPR terms. The terms only need to be accepted once.
-- **`--server-id <id>`**: Test using a specific server by Ookla server ID
-- **`--source-ip <ip>`**: Test a specific network interface identified by local IP
+-   **`-h`**, **`--help`**: Help
+-   **`--accept-license`**: Accept the Ookla EULA, TOS and Privacy policy. The terms only need to be accepted once.
+-   **`--accept-gdpr`**: Accept the Ookla GDPR terms. The terms only need to be accepted once.
+-   **`--server-id <id>`**: Test using a specific server by Ookla server ID
+-   **`--source-ip <ip>`**: Test a specific network interface identified by local IP
 
 ## Module use options
 
@@ -53,27 +55,27 @@ You can pass an optional `options` object.
 
 The options include:
 
-  - **`serverId`**: _`string`_ ID of the server to restrict the tests against.
-  - **`sourceIp`**: _`string`_ IP of the network interface to bind
-  - **`progress`**: _`function`_ Function to handle progress events
-  - **`binary`**: _`string`_ Binary executable path of the Ookla speedtest CLI
-  - **`binaryVersion`**: _`string`_ *Default `'1.0.0'`* Binary executable version
-  - **`host`**: _`string`_ Server host to connect to
-  - **`verbosity`**: _`number`_ Log level for `{ type: log }` progress events
-  - **`acceptLicense`**: _`boolean`_ Set to `true` to accept the Ookla EULA, TOS and Privacy policy. This must be done (at least) once on the system. If you have not accepted the Ookla license terms, you can view the links to their agreements by running the speedtest-net CLI without the `--accept-license` option.
-  - **`acceptGdpr`**: _`boolean`_ Set to `true` to accept the Ookla GDPR terms. This must be done (at least) once on the system. If you have not accepted the Ookla GDPR terms you can read their disclaimer by running the speedtest-net CLI without the `--accept-license` option.
-  - **`cancel`**: _`function`_ A cancellation function created with `speedTest.makeCancel()` to cancel the test (See [Canceling Tests](#canceling-tests)).
+-   **`serverId`**: _`string`_ ID of the server to restrict the tests against.
+-   **`sourceIp`**: _`string`_ IP of the network interface to bind
+-   **`progress`**: _`function`_ Function to handle progress events
+-   **`binary`**: _`string`_ Binary executable path of the Ookla speedtest CLI
+-   **`binaryVersion`**: _`string`_ _Default `'1.0.0'`_ Binary executable version
+-   **`host`**: _`string`_ Server host to connect to
+-   **`verbosity`**: _`number`_ Log level for `{ type: log }` progress events
+-   **`acceptLicense`**: _`boolean`_ Set to `true` to accept the Ookla EULA, TOS and Privacy policy. This must be done (at least) once on the system. If you have not accepted the Ookla license terms, you can view the links to their agreements by running the speedtest-net CLI without the `--accept-license` option.
+-   **`acceptGdpr`**: _`boolean`_ Set to `true` to accept the Ookla GDPR terms. This must be done (at least) once on the system. If you have not accepted the Ookla GDPR terms you can read their disclaimer by running the speedtest-net CLI without the `--accept-license` option.
+-   **`cancel`**: _`function`_ A cancellation function created with `speedTest.makeCancel()` to cancel the test (See [Canceling Tests](#canceling-tests)).
 
 ## Progress Events
 
 Each progress event has a `type` property which will be one of:
 
-- `'config'`
-- `'log'`
-- `'testStart'`
-- `'ping'`
-- `'download'`
-- `'upload'`
+-   `'config'`
+-   `'log'`
+-   `'testStart'`
+-   `'ping'`
+-   `'download'`
+-   `'upload'`
 
 Each event contains a `progress` property at the root which indicates the overall progress of the test as a fraction (0 to 1).
 
@@ -82,6 +84,7 @@ The `ping`, `download` and `upload` events also contain a `progress` property in
 All events except `config` contain a `timestamp` property which will be a `Date` object.
 
 ### Config event
+
 This event **is only sent** when the `verbosity` is 2 or greater. It contains a bunch of information about the test:
 
 ```js
@@ -188,6 +191,7 @@ This contains information about the test to be run.
 ```
 
 ### Ping event
+
 Sent when the test is in the ping phase. Jitter and latency are in milliseconds.
 
 ```js
@@ -200,6 +204,7 @@ Sent when the test is in the ping phase. Jitter and latency are in milliseconds.
 ```
 
 ### Download event
+
 Sent when the test is in the download phase. Bandwidth is in bytes per second.
 
 ```js
@@ -217,6 +222,7 @@ Sent when the test is in the download phase. Bandwidth is in bytes per second.
 ```
 
 ### Upload event
+
 Sent when the test is in the upload phase. Bandwidth is in bytes per second.
 
 ```js
@@ -234,6 +240,7 @@ Sent when the test is in the upload phase. Bandwidth is in bytes per second.
 ```
 
 ## Return value
+
 The `speedTest` function returns a promise that resolves to an object with the following shape:
 
 ```js
@@ -277,22 +284,23 @@ If the canceler is called before the test is started, the test will abort before
 Canceler functions are not meant to be reused.
 
 ```js
-const speedTest = require('speedtest-net');
+const speedTest = require("speedtest-net");
 
 (async () => {
-  try {
-    const cancel = speedTest.makeCancel();
-    setTimeout(cancel, 1000);
-    console.log(await speedTest({ cancel }));
-  } catch (err) {
-    console.log(err.message);
-  } finally {
-    process.exit(0);
-  }
+    try {
+        const cancel = speedTest.makeCancel();
+        setTimeout(cancel, 1000);
+        console.log(await speedTest({ cancel }));
+    } catch (err) {
+        console.log(err.message);
+    } finally {
+        process.exit(0);
+    }
 })();
 ```
 
 ## Considerations
+
 This uses the official Ookla command line client so the results should be the same as the speedtest.net tests you can run in the browser.
 
 When running the speed test for the first time you may get an error indicating you need to accept the Ookla license terms. For the CLI you can pass the `--accept-license` option. For the module, you can pass the `{ acceptLicense: true }` option. If you're located in Europe you might need to accept the additional GDPR terms, this can be done by passing `--accept-gdpr` for the CLI and the `{ acceptGdpr: true }` option when used as a module.
